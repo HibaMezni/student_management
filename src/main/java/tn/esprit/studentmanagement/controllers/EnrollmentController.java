@@ -28,32 +28,27 @@ public class EnrollmentController {
 
     @PostMapping("/createEnrollment")
     public Enrollment createEnrollment(@RequestBody EnrollmentDto enrollmentDto) {
-        Enrollment enrollment = new Enrollment();
-        enrollment.setIdEnrollment(enrollmentDto.getIdEnrollment());
-        enrollment.setEnrollmentDate(enrollmentDto.getEnrollmentDate());
-        enrollment.setGrade(enrollmentDto.getGrade());
-        enrollment.setStatus(enrollmentDto.getStatus());
-        enrollment.setStudent(enrollmentDto.getStudent());
-        enrollment.setCourse(enrollmentDto.getCourse());
-
-        return enrollmentService.saveEnrollment(enrollment);
+        return enrollmentService.saveEnrollment(toEnrollment(enrollmentDto));
     }
 
     @PutMapping("/updateEnrollment")
     public Enrollment updateEnrollment(@RequestBody EnrollmentDto enrollmentDto) {
-        Enrollment enrollment = new Enrollment();
-        enrollment.setIdEnrollment(enrollmentDto.getIdEnrollment());
-        enrollment.setEnrollmentDate(enrollmentDto.getEnrollmentDate());
-        enrollment.setGrade(enrollmentDto.getGrade());
-        enrollment.setStatus(enrollmentDto.getStatus());
-        enrollment.setStudent(enrollmentDto.getStudent());
-        enrollment.setCourse(enrollmentDto.getCourse());
-
-        return enrollmentService.saveEnrollment(enrollment);
+        return enrollmentService.saveEnrollment(toEnrollment(enrollmentDto));
     }
 
     @DeleteMapping("/deleteEnrollment/{id}")
     public void deleteEnrollment(@PathVariable Long id) {
         enrollmentService.deleteEnrollment(id);
+    }
+
+    private Enrollment toEnrollment(EnrollmentDto enrollmentDto) {
+        Enrollment enrollment = new Enrollment();
+        enrollment.setIdEnrollment(enrollmentDto.getIdEnrollment());
+        enrollment.setEnrollmentDate(enrollmentDto.getEnrollmentDate());
+        enrollment.setGrade(enrollmentDto.getGrade());
+        enrollment.setStatus(enrollmentDto.getStatus());
+        enrollment.setStudent(enrollmentDto.getStudent());
+        enrollment.setCourse(enrollmentDto.getCourse());
+        return enrollment;
     }
 }
