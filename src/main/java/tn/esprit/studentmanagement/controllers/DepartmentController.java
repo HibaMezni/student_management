@@ -28,24 +28,23 @@ public class DepartmentController {
 
     @PostMapping("/createDepartment")
     public Department createDepartment(@RequestBody DepartmentDto departmentDto) {
-        Department department = new Department();
-        department.setIdDepartment(departmentDto.getIdDepartment());
-        department.setName(departmentDto.getName());
-
-        return departmentService.saveDepartment(department);
+        return departmentService.saveDepartment(toDepartment(departmentDto));
     }
 
     @PutMapping("/updateDepartment")
     public Department updateDepartment(@RequestBody DepartmentDto departmentDto) {
-        Department department = new Department();
-        department.setIdDepartment(departmentDto.getIdDepartment());
-        department.setName(departmentDto.getName());
-
-        return departmentService.saveDepartment(department);
+        return departmentService.saveDepartment(toDepartment(departmentDto));
     }
 
     @DeleteMapping("/deleteDepartment/{id}")
     public void deleteDepartment(@PathVariable Long id) {
         departmentService.deleteDepartment(id);
+    }
+
+    private Department toDepartment(DepartmentDto departmentDto) {
+        Department department = new Department();
+        department.setIdDepartment(departmentDto.getIdDepartment());
+        department.setName(departmentDto.getName());
+        return department;
     }
 }
