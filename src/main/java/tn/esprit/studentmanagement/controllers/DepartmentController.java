@@ -1,51 +1,47 @@
 package tn.esprit.studentmanagement.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.studentmanagement.dto.DepartmentDto;
-import tn.esprit.studentmanagement.entities.Department;
-import tn.esprit.studentmanagement.services.IDepartmentService;
+import tn.esprit.studentmanagement.entities.Enrollment;
+import tn.esprit.studentmanagement.services.IEnrollment;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/Depatment")
+@RequestMapping("/Enrollment")
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
-public class DepartmentController {
+public class EnrollmentController {
 
-    private final IDepartmentService departmentService;
+    private final IEnrollment enrollmentService;
+    private final ObjectMapper objectMapper;
 
-    @GetMapping("/getAllDepartment")
-    public List<Department> getAllDepartment() {
-        return departmentService.getAllDepartments();
+    @GetMapping("/getAllEnrollment")
+    public List<Enrollment> getAllEnrollment() {
+        return enrollmentService.getAllEnrollments();
     }
 
-    @GetMapping("/getDepartment/{id}")
-    public Department getDepartment(@PathVariable Long id) {
-        return departmentService.getDepartmentById(id);
+    @GetMapping("/getEnrollment/{id}")
+    public Enrollment getEnrollment(@PathVariable Long id) {
+        return enrollmentService.getEnrollmentById(id);
     }
 
-    @PostMapping("/createDepartment")
-    public Department createDepartment(@RequestBody DepartmentDto departmentDto) {
-        Department department = new Department();
-        department.setIdDepartment(departmentDto.getIdDepartment());
-        department.setName(departmentDto.getName());
-
-        return departmentService.saveDepartment(department);
+    @PostMapping("/createEnrollment")
+    public Enrollment createEnrollment(@RequestBody Map<String, Object> enrollmentRequest) {
+        Enrollment enrollment = objectMapper.convertValue(enrollmentRequest, Enrollment.class);
+        return enrollmentService.saveEnrollment(enrollment);
     }
 
-    @PutMapping("/updateDepartment")
-    public Department updateDepartment(@RequestBody DepartmentDto departmentDto) {
-        Department department = new Department();
-        department.setIdDepartment(departmentDto.getIdDepartment());
-        department.setName(departmentDto.getName());
-
-        return departmentService.saveDepartment(department);
+    @PutMapping("/updateEnrollment")
+    public Enrollment updateEnrollment(@RequestBody Map<String, Object> enrollmentRequest) {
+        Enrollment enrollment = objectMapper.convertValue(enrollmentRequest, Enrollment.class);
+        return enrollmentService.saveEnrollment(enrollment);
     }
 
-    @DeleteMapping("/deleteDepartment/{id}")
-    public void deleteDepartment(@PathVariable Long id) {
-        departmentService.deleteDepartment(id);
+    @DeleteMapping("/deleteEnrollment/{id}")
+    public void deleteEnrollment(@PathVariable Long id) {
+        enrollmentService.deleteEnrollment(id);
     }
 }
