@@ -28,36 +28,29 @@ public class StudentController {
 
     @PostMapping("/createStudent")
     public Student createStudent(@RequestBody StudentDto studentDto) {
-        Student student = new Student();
-        student.setIdStudent(studentDto.getIdStudent());
-        student.setFirstName(studentDto.getFirstName());
-        student.setLastName(studentDto.getLastName());
-        student.setEmail(studentDto.getEmail());
-        student.setPhone(studentDto.getPhone());
-        student.setAddress(studentDto.getAddress());
-        student.setDateOfBirth(studentDto.getDateOfBirth());
-        student.setDepartment(studentDto.getDepartment());
-
-        return studentService.saveStudent(student);
+        return studentService.saveStudent(toStudent(studentDto));
     }
 
     @PutMapping("/updateStudent")
     public Student updateStudent(@RequestBody StudentDto studentDto) {
-        Student student = new Student();
-        student.setIdStudent(studentDto.getIdStudent());
-        student.setFirstName(studentDto.getFirstName());
-        student.setLastName(studentDto.getLastName());
-        student.setEmail(studentDto.getEmail());
-        student.setPhone(studentDto.getPhone());
-        student.setAddress(studentDto.getAddress());
-        student.setDateOfBirth(studentDto.getDateOfBirth());
-        student.setDepartment(studentDto.getDepartment());
-
-        return studentService.saveStudent(student);
+        return studentService.saveStudent(toStudent(studentDto));
     }
 
     @DeleteMapping("/deleteStudent/{id}")
     public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
+    }
+
+    private Student toStudent(StudentDto studentDto) {
+        Student student = new Student();
+        student.setIdStudent(studentDto.getIdStudent());
+        student.setFirstName(studentDto.getFirstName());
+        student.setLastName(studentDto.getLastName());
+        student.setEmail(studentDto.getEmail());
+        student.setPhone(studentDto.getPhone());
+        student.setAddress(studentDto.getAddress());
+        student.setDateOfBirth(studentDto.getDateOfBirth());
+        student.setDepartment(studentDto.getDepartment());
+        return student;
     }
 }
