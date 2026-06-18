@@ -1,13 +1,12 @@
 package tn.esprit.studentmanagement.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.studentmanagement.dto.EnrollmentDto;
 import tn.esprit.studentmanagement.entities.Enrollment;
 import tn.esprit.studentmanagement.services.IEnrollment;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/Enrollment")
@@ -16,7 +15,6 @@ import java.util.Map;
 public class EnrollmentController {
 
     private final IEnrollment enrollmentService;
-    private final ObjectMapper objectMapper;
 
     @GetMapping("/getAllEnrollment")
     public List<Enrollment> getAllEnrollment() {
@@ -29,14 +27,28 @@ public class EnrollmentController {
     }
 
     @PostMapping("/createEnrollment")
-    public Enrollment createEnrollment(@RequestBody Map<String, Object> enrollmentRequest) {
-        Enrollment enrollment = objectMapper.convertValue(enrollmentRequest, Enrollment.class);
+    public Enrollment createEnrollment(@RequestBody EnrollmentDto enrollmentDto) {
+        Enrollment enrollment = new Enrollment();
+        enrollment.setIdEnrollment(enrollmentDto.getIdEnrollment());
+        enrollment.setEnrollmentDate(enrollmentDto.getEnrollmentDate());
+        enrollment.setGrade(enrollmentDto.getGrade());
+        enrollment.setStatus(enrollmentDto.getStatus());
+        enrollment.setStudent(enrollmentDto.getStudent());
+        enrollment.setCourse(enrollmentDto.getCourse());
+
         return enrollmentService.saveEnrollment(enrollment);
     }
 
     @PutMapping("/updateEnrollment")
-    public Enrollment updateEnrollment(@RequestBody Map<String, Object> enrollmentRequest) {
-        Enrollment enrollment = objectMapper.convertValue(enrollmentRequest, Enrollment.class);
+    public Enrollment updateEnrollment(@RequestBody EnrollmentDto enrollmentDto) {
+        Enrollment enrollment = new Enrollment();
+        enrollment.setIdEnrollment(enrollmentDto.getIdEnrollment());
+        enrollment.setEnrollmentDate(enrollmentDto.getEnrollmentDate());
+        enrollment.setGrade(enrollmentDto.getGrade());
+        enrollment.setStatus(enrollmentDto.getStatus());
+        enrollment.setStudent(enrollmentDto.getStudent());
+        enrollment.setCourse(enrollmentDto.getCourse());
+
         return enrollmentService.saveEnrollment(enrollment);
     }
 
