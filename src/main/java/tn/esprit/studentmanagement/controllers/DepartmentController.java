@@ -2,9 +2,8 @@ package tn.esprit.studentmanagement.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.studentmanagement.dto.DepartmentDto;
 import tn.esprit.studentmanagement.entities.Department;
-import tn.esprit.studentmanagement.entities.Enrollment;
-import tn.esprit.studentmanagement.services.DepartmentService;
 import tn.esprit.studentmanagement.services.IDepartmentService;
 
 import java.util.List;
@@ -14,23 +13,39 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class DepartmentController {
-    private IDepartmentService departmentService;
+
+    private final IDepartmentService departmentService;
 
     @GetMapping("/getAllDepartment")
-    public List<Department> getAllDepartment() { return departmentService.getAllDepartments(); }
+    public List<Department> getAllDepartment() {
+        return departmentService.getAllDepartments();
+    }
 
     @GetMapping("/getDepartment/{id}")
-    public Department getDepartment(@PathVariable Long id) { return departmentService.getDepartmentById(id); }
+    public Department getDepartment(@PathVariable Long id) {
+        return departmentService.getDepartmentById(id);
+    }
 
     @PostMapping("/createDepartment")
-    public Department createDepartment(@RequestBody Department department) { return departmentService.saveDepartment(department); }
+    public Department createDepartment(@RequestBody DepartmentDto departmentDto) {
+        Department department = new Department();
+        department.setIdDepartment(departmentDto.getIdDepartment());
+        department.setName(departmentDto.getName());
+
+        return departmentService.saveDepartment(department);
+    }
 
     @PutMapping("/updateDepartment")
-    public Department updateDepartment(@RequestBody Department department) {
+    public Department updateDepartment(@RequestBody DepartmentDto departmentDto) {
+        Department department = new Department();
+        department.setIdDepartment(departmentDto.getIdDepartment());
+        department.setName(departmentDto.getName());
+
         return departmentService.saveDepartment(department);
     }
 
     @DeleteMapping("/deleteDepartment/{id}")
     public void deleteDepartment(@PathVariable Long id) {
-      departmentService.deleteDepartment(id); }
+        departmentService.deleteDepartment(id);
+    }
 }
